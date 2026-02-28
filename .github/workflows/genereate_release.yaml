@@ -33,6 +33,11 @@ jobs:
           dotnet publish -c Release -r win-x64 -p:EnableWindowsTargeting=true -p:PublishSingleFile=true -p:SelfContained=true -o $RELEASE_DIR $EXECUTABLE_PROJ/$EXECUTABLE_PROJ.csproj
           # please check https://learn.microsoft.com/en-us/dotnet/core/tools/sdk-errors/netsdk1100
           # for more information
+
+      - name: Copy documentation files
+        run: |
+          cp -r Docs Examples $RELEASE_DIR
+
       - name: Archive release
         run: |
           sudo apt install -y  zip
