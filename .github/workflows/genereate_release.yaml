@@ -4,8 +4,14 @@ on:
   push:
     tags:
     - '*'
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "Manual trigger"
+        required: true
+
 env:
-  RELEASE_DIR: Release
+  RELEASE_DIR: MicroCISC
   EXECUTABLE_PROJ: Ui
 jobs:
   gen_release:
@@ -35,4 +41,6 @@ jobs:
       - name: Upload release
         uses: ncipollo/release-action@v1
         with:
+           token: ${{ secrets.GITHUB_TOKEN }}
+           tag: ${{ github.event.inputs.tag_name || github.ref_name }}
            artifacts: ${{ env.RELEASE_DIR }}.zip
