@@ -89,11 +89,16 @@ public class CpuService : ICpuService
 
         _microprogramService.CurrentRow = row;
         _microprogramService.CurrentColumn = _mirLookUpIndex[column];
+        Brush highlightColour = null;
+        if (_microprogramService.CurrentMemoryRow[_mirLookUpIndex[column]].Value.Contains("Pm", StringComparison.OrdinalIgnoreCase))
+            highlightColour = Brushes.Red;
+        else if (_microprogramService.CurrentMemoryRow[_mirLookUpIndex[column]].Value.Contains("Pd", StringComparison.OrdinalIgnoreCase))
+            highlightColour = Brushes.Blue;
 
         // Update bus values in diagram
         _diagram.UpdateBusValues(_cpu.SBUS, _cpu.DBUS, _cpu.RBUS);
 
-        _diagram.HandleHighlightConnection(_cpu.Registers[REGISTERS.FLAGS], _microprogramService.CurrentMemoryRow[_mirLookUpIndex[column]].Value, true, Brushes.Red);
+        _diagram.HandleHighlightConnection(_cpu.Registers[REGISTERS.FLAGS], _microprogramService.CurrentMemoryRow[_mirLookUpIndex[column]].Value, true, highlightColour);
 
         _diagram.HandleHighlightMpmBox(_mirLookUpIndex[column]);
 
@@ -121,11 +126,16 @@ public class CpuService : ICpuService
 
         _microprogramService.CurrentRow = row;
         _microprogramService.CurrentColumn = -1;
-        
+        Brush highlightColour = null;
+        if (_microprogramService.CurrentMemoryRow[_mirLookUpIndex[col]].Value.Contains("Pm", StringComparison.OrdinalIgnoreCase))
+            highlightColour = Brushes.Red;
+        else if (_microprogramService.CurrentMemoryRow[_mirLookUpIndex[col]].Value.Contains("Pd", StringComparison.OrdinalIgnoreCase))
+            highlightColour = Brushes.Blue;
+
         // Update bus values in diagram
         _diagram.UpdateBusValues(_cpu.SBUS, _cpu.DBUS, _cpu.RBUS);
 
-        _diagram.HandleHighlightConnection(_cpu.Registers[REGISTERS.FLAGS], _microprogramService.CurrentMemoryRow[_mirLookUpIndex[col]].Value, true, Brushes.Red);
+        _diagram.HandleHighlightConnection(_cpu.Registers[REGISTERS.FLAGS], _microprogramService.CurrentMemoryRow[_mirLookUpIndex[col]].Value, true, highlightColour);
 
         if (row == 97 && col == 2)
         {
@@ -142,11 +152,11 @@ public class CpuService : ICpuService
 
             _microprogramService.CurrentRow = row;
             _microprogramService.CurrentColumn = -1;
-            
+
             // Update bus values in diagram
             _diagram.UpdateBusValues(_cpu.SBUS, _cpu.DBUS, _cpu.RBUS);
 
-            _diagram.HandleHighlightConnection(_cpu.Registers[REGISTERS.FLAGS], _microprogramService.CurrentMemoryRow[_mirLookUpIndex[col]].Value, true, Brushes.Red);
+            _diagram.HandleHighlightConnection(_cpu.Registers[REGISTERS.FLAGS], _microprogramService.CurrentMemoryRow[_mirLookUpIndex[col]].Value, true, highlightColour);
         }
     }
     public void StepInstruction()
@@ -161,11 +171,16 @@ public class CpuService : ICpuService
 
         _microprogramService.CurrentRow = row;
         _microprogramService.CurrentColumn = _mirLookUpIndex[col];
-        
+        Brush colour = null;
+        if (_microprogramService.CurrentMemoryRow[_mirLookUpIndex[col]].Value.Contains("Pm", StringComparison.OrdinalIgnoreCase))
+            colour = Brushes.Red;
+        else if (_microprogramService.CurrentMemoryRow[_mirLookUpIndex[col]].Value.Contains("Pd", StringComparison.OrdinalIgnoreCase))
+            colour = Brushes.Blue;
+
         // Update bus values in diagram
         _diagram.UpdateBusValues(_cpu.SBUS, _cpu.DBUS, _cpu.RBUS);
 
-        _diagram.HandleHighlightConnection(_cpu.Registers[REGISTERS.FLAGS], _microprogramService.CurrentMemoryRow[_mirLookUpIndex[col]].Value, true, Brushes.Red);
+        _diagram.HandleHighlightConnection(_cpu.Registers[REGISTERS.FLAGS], _microprogramService.CurrentMemoryRow[_mirLookUpIndex[col]].Value, true, colour);
 
         // Check if CPU is accessing flags in each microcommand
         while ((row != 0 || col != 0) && (row != 97 || col != 2))
@@ -174,11 +189,15 @@ public class CpuService : ICpuService
 
             _microprogramService.CurrentRow = row;
             _microprogramService.CurrentColumn = _mirLookUpIndex[col];
-            
+            if (_microprogramService.CurrentMemoryRow[_mirLookUpIndex[col]].Value.Contains("Pm", StringComparison.OrdinalIgnoreCase))
+                colour = Brushes.Red;
+            else if (_microprogramService.CurrentMemoryRow[_mirLookUpIndex[col]].Value.Contains("Pd", StringComparison.OrdinalIgnoreCase))
+                colour = Brushes.Blue;
+
             // Update bus values in diagram
             _diagram.UpdateBusValues(_cpu.SBUS, _cpu.DBUS, _cpu.RBUS);
 
-            _diagram.HandleHighlightConnection(_cpu.Registers[REGISTERS.FLAGS], _microprogramService.CurrentMemoryRow[_mirLookUpIndex[col]].Value, true, Brushes.Red);
+            _diagram.HandleHighlightConnection(_cpu.Registers[REGISTERS.FLAGS], _microprogramService.CurrentMemoryRow[_mirLookUpIndex[col]].Value, true, colour);
         }
 
         if (row == 97 && col == 2)
